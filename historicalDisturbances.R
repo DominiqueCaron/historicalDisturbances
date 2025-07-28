@@ -6,16 +6,16 @@
 ## If exact location is required, functions will be: `sim$.mods$<moduleName>$FunctionName`.
 defineModule(sim, list(
   name = "historicalDisturbances",
-  description = "",
-  keywords = "",
-  authors = structure(list(list(given = c("First", "Middle"), family = "Last", role = c("aut", "cre"), email = "email@example.com", comment = NULL)), class = "person"),
+  description = "Module that download and prepare disturbance data.",
+  keywords = c("disturbance"),
+  authors = c("Dominique",  "Caron", email = "celine.boisvenue@nrcan-rncan.gc.ca", role = c("aut", "cre")),
   childModules = character(0),
   version = list(historicalDisturbances = "0.0.0.9000"),
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
   citation = list("citation.bib"),
   documentation = list("NEWS.md", "README.md", "historicalDisturbances.Rmd"),
-  reqdPkgs = list("SpaDES.core (>= 2.1.5.9003)", "ggplot2", "data.table", "terra"),
+  reqdPkgs = list("SpaDES.core (>= 2.1.5.9003)", "data.table", "terra"),
   parameters = bindrows(
     defineParameter(
       "disturbanceSource", "character", "CanLaD", NA_character_, NA_character_, 
@@ -28,7 +28,7 @@ defineModule(sim, list(
                    "Refer to data/availableData.csv to see which data is available.")
       ),
     defineParameter(
-      "disturbanceTypes", "character", "fire", NA_character_, NA_character_, 
+      "disturbanceTypes", "character", "wildfire", NA_character_, NA_character_, 
       desc = paste("The type of disturbance extracted.", 
                    "Refer to data/availableData.csv to see which data is available.")
     ),
