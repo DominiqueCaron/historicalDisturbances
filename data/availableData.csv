@@ -1,0 +1,3 @@
+disturbanceSource,disturbanceTypes,disturbanceYears,url,citation
+CanLaD,wildfire,1985:2024,https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc,"Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St-Amant, Canada Landsat Disturbance with pest (CanLaD): a Canada-wide Landsat-based 30-m resolution product of fire, harvest and pest outbreak detection and attribution since 1987."
+CanLaD,harvesting,1985:2024,https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc,"Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St-Amant, Canada Landsat Disturbance with pest (CanLaD): a Canada-wide Landsat-based 30-m resolution product of fire, harvest and pest outbreak detection and attribution since 1987."
