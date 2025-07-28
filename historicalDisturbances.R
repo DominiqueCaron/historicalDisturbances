@@ -15,7 +15,7 @@ defineModule(sim, list(
   timeunit = "year",
   citation = list("citation.bib"),
   documentation = list("NEWS.md", "README.md", "historicalDisturbances.Rmd"),
-  reqdPkgs = list("SpaDES.core (>= 2.1.5.9003)", "ggplot2"),
+  reqdPkgs = list("SpaDES.core (>= 2.1.5.9003)", "ggplot2", "data.table", "terra"),
   parameters = bindrows(
     defineParameter(
       "disturbanceSource", "character", "CanLaD", NA_character_, NA_character_, 

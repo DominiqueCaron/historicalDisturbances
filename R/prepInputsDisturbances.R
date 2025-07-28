@@ -1,32 +1,18 @@
 prepInputsDisturbances <- function(source, types, years, to, destinationPath) {
   # Make sure that the combination of source, years and types are available:
-  if (source == "CanLaD") {
-    disturbanceRasters <- prepInputsCanLaD(types = types,
-                                           years = years,
+  checkParameters(source, types, years)
+
+    if (source == "CanLaD") {
+    disturbanceRasters <- prepInputsCanLaD(types = disturbanceParams$types,
+                                           years = disturbanceParams$years,
                                            to = to, 
                                            destinationPath = destinationPath)
-  } else {
-    stop(
-      paste(
-        source, " is not currently available in historicalDisturbances.",
-        "refer to data/availableData.csv to see which sources are available."
-      )
-    )
-  }
+    }
+  
   return(disturbanceRasters)
 }
 
 prepInputsCanLaD <- function(types, years, to, destinationPath){
-  
-  availableTypes <- c("wildfire", "harvesting")
-  if(all(!(availableTypes %in% types))){
-    stop(
-      paste(
-        types, " is not currently available with CanLaD.",
-        "refer to data/availableData.csv to see which sources are available."
-      )
-    )
-  }
   
   disturbanceRasters <- list()
   
@@ -63,4 +49,58 @@ prepInputsCanLaD <- function(types, years, to, destinationPath){
   }
   
   return(disturbanceRasters)
+}
+
+checkParameters <- function( source, types, years){
+  availableData <- fread("https://raw.githubusercontent.com/DominiqueCaron/historicalDisturbances/refs/heads/main/data/availableData.csv", showProgress = FALSE)
+  
+  # 1. Check that the data source is available
+  if(!(source %in% availableData$disturbanceSource)) {
+    stop(
+      paste(
+        source, "is not currently available in historicalDisturbances.",
+        "Refer to data/availableData.csv to see which data are available."
+      )
+    )
+  }
+  availableData <- availableData[disturbanceSource == source]
+  
+  # 2. Check that disturbance types are available
+  if(!(all(types %in% availableData$disturbanceTypes))) {
+    notAvailableTypes <- setdiff(types, availableData$disturbanceTypes)
+    if (length(notAvailableTypes) == 1){
+      stop(
+        paste(
+          notAvailableTypes, "is currently not available in historicalDisturbances.",
+          "Refer to data/availableData.csv to see which data are available."
+        )
+      )
+    } else {
+      stop(
+        paste(
+          paste(notAvailableTypes, collapse = " and "),
+          "are currently not available in historicalDisturbances.",
+          "Refer to data/availableData.csv to see which data are available."
+        )
+      )
+    }
+  } else {
+    
+    for (type in types) {
+      
+      # 3. Check that disturbance years are available
+      availableYears <- as.numeric(strsplit(availableData[disturbanceTypes == type, disturbanceYears], ":")[[1]]) |> (\(x) x[1]:x[2])()
+      if(!all(years %in% availableYears)) {
+        stop(
+          paste0(
+            "Some years are currently not available for ", type, " in historicalDisturbances.",
+            "Refer to data/availableData.csv to see which data are available."
+          )
+        )
+      }
+      
+    }
+    
+  }
+  
 }
