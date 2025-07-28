@@ -30,7 +30,7 @@ always_allow_html: true
 
 #### Authors:
 
-Dominique, Caron, celine.boisvenue@nrcan-rncan.gc.ca, aut, cre
+Dominique, Caron, dominique.caron@nrcan-rncan.gc.ca, aut, cre
 <!-- ideally separate authors with new lines, '\n' not working -->
 
 ## Module Overview
@@ -39,7 +39,7 @@ Dominique, Caron, celine.boisvenue@nrcan-rncan.gc.ca, aut, cre
 
 The module download disturbance data from various sources and prepare them to be used in other modules. The following disturbance product available are the following:
 
-Table \@ref(tab:moduleInputs-historicalDisturbances) shows the full list of module inputs.
+Table \@ref(tab:data-historicalDisturbances) shows the full list of module inputs.
 
 <table class="table" style="color: black; margin-left: auto; margin-right: auto;">
 <caption>(\#tab:data-historicalDisturbances)(\#tab:data-historicalDisturbances)Available disturbance products</caption>

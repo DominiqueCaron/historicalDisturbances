@@ -8,7 +8,7 @@ defineModule(sim, list(
   name = "historicalDisturbances",
   description = "Module that download and prepare disturbance data.",
   keywords = c("disturbance"),
-  authors = c("Dominique",  "Caron", email = "celine.boisvenue@nrcan-rncan.gc.ca", role = c("aut", "cre")),
+  authors = c("Dominique",  "Caron", email = "dominique.caron@nrcan-rncan.gc.ca", role = c("aut", "cre")),
   childModules = character(0),
   version = list(historicalDisturbances = "0.0.0.9000"),
   timeframe = as.POSIXlt(c(NA, NA)),

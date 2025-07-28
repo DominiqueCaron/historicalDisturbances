@@ -47,7 +47,7 @@ download.file(url = "https://img.shields.io/badge/Made%20with-Markdown-1f425f.pn
 
 The module download disturbance data from various sources and prepare them to be used in other modules. The following disturbance product available are the following:
 
-Table \@ref(tab:moduleInputs-historicalDisturbances) shows the full list of module inputs.
+Table \@ref(tab:data-historicalDisturbances) shows the full list of module inputs.
 
 ```{r data-historicalDisturbances, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
 data_available <- data.table::fread("data/availableData.csv")
