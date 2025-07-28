@@ -42,15 +42,18 @@ defineModule(sim, list(
                     "Should caching of events or module be used?")
   ),
   inputObjects = bindrows(
-    expectsInputs(objectName = "disturbanceRasters",
-                  objectClass = "list",
-                  desc = paste("Set of spatial data sources containing locations of disturbance events for each year.",
-                               "List items must be named by disturbance event types.",
-                               "Within each event's list, items must be named by the 4 digit year the disturbances occured in.",
-                               "For example, fires for 2025 can be accessed with `disturbanceRasters[[\"fires\"]][[\"2025\"]]`.",
-                               "Each disturbance item is a terra SpatRaster layer.",
-                               "All non-NA areas will be considered events.")
-    ),
+    expectsInput(
+      objectName = "disturbanceRasters",
+      objectClass = "list",
+      desc = paste(
+        "Set of spatial data sources containing locations of disturbance events for each year.",
+        "List items must be named by disturbance event types.",
+        "Within each event's list, items must be named by the 4 digit year the disturbances occured in.",
+        "For example, fires for 2025 can be accessed with `disturbanceRasters[[\"fires\"]][[\"2025\"]]`.",
+        "Each disturbance item is a terra SpatRaster layer.",
+        "All non-NA areas will be considered events."
+      )
+    ), 
     expectsInput(objectName = "rasterToMatch", 
                  objectClass = "spatRaster", 
                  desc = "Raster template defining the study area. NA cells will be excluded from analysis.", 
@@ -69,7 +72,7 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
     init = {
 
       # schedule future event(s)
-      if(!is.na(P(sim)$disturbanceYears)) {
+      if(any(!is.na(P(sim)$disturbanceYears))) {
         firstDistYear <- min(P(sim)$disturbanceYears)
       } else {
         firstDistYear <- start(sim)
@@ -80,22 +83,15 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
     },
     plot = {
       # ! ----- EDIT BELOW ----- ! #
-      # do stuff for this event
-
-      plotFun(sim) # example of a plotting function
-      # schedule future event(s)
-
-      # e.g.,
-      #sim <- scheduleEvent(sim, time(sim) + P(sim)$.plotInterval, "historicalDisturbances", "plot")
 
       # ! ----- STOP EDITING ----- ! #
     },
     readDisturbances = {
       
-      sim$rstCurrentBurn <- disturbanceRasters[["fires"]][[as.character(time(sim))]]
-
-      if(!is.na(P(sim)$disturbanceYears)) {
-        if(any(P(sim)$disturbanceYears[P(sim)$disturbanceYears) > time(sim)){
+      sim$rstCurrentBurn <- sim$disturbanceRasters[["fires"]][[as.character(time(sim))]]
+      
+      if(any(!is.na(P(sim)$disturbanceYears))) {
+        if(any(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])){
           nextDistYear <- min(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])
           sim <- scheduleEvent(sim, nextDistYear, "historicalDisturbances", "readDisturbances")
         }
