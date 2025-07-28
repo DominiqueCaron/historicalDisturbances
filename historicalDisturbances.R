@@ -62,7 +62,10 @@ defineModule(sim, list(
   outputObjects = bindrows(
     createsOutput(objectName = "rstCurrentBurn", 
                   objectClass = "spatRaster", 
-                  desc = "A binary raster with 1 values representing burned pixels.")
+                  desc = "A binary raster with 1 values representing burned pixels."),
+    createsOutput(objectName = "rstCurrentHarvest", 
+                  objectClass = "spatRaster", 
+                  desc = "A binary raster with 1 values representing harvested pixels.")
   )
 ))
 
@@ -77,6 +80,7 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
       } else {
         firstDistYear <- start(sim)
       }
+      
       sim <- scheduleEvent(sim, firstDistYear, "historicalDisturbances", "readDisturbances")
       
       sim <- scheduleEvent(sim, P(sim)$.plotInitialTime, "historicalDisturbances", "plot")
@@ -88,7 +92,13 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
     },
     readDisturbances = {
       
-      sim$rstCurrentBurn <- sim$disturbanceRasters[["fires"]][[as.character(time(sim))]]
+      if ("wildfire" %in% P(sim)$disturbanceTypes){
+        sim$rstCurrentBurn <- sim$disturbanceRasters[["fires"]][[as.character(time(sim))]]
+      }
+      
+      if ("harvesting" %in% P(sim)$disturbanceTypes){
+        sim$rstCurrentHarvest <- sim$disturbanceRasters[["harvesting"]][[as.character(time(sim))]]
+      }
       
       if(any(!is.na(P(sim)$disturbanceYears))) {
         if(any(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])){
@@ -113,10 +123,20 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
   message(currentModule(sim), ": using dataPath '", dPath, "'.")
 
   if (!suppliedElsewhere("disturbanceRasters")) {
+
+    # By default, the module gets the disturbance for all simulation years, unless
+    # specified otherwise in the parameters
+    if(all(is.na(P(sim)$disturbanceYears))) {
+      disturbanceYears <- start(sim):end(sim)
+    } else {
+      disturbanceYears <- P(sim)$disturbanceYears
+    }
+    
+    # Get all the rasters
     sim$disturbanceRasters <- prepInputsDisturbances(
       source = P(sim)$disturbanceSource,
       types = P(sim)$disturbanceTypes,
-      years = P(sim)$disturbanceYears,
+      years = disturbanceYears,
       to = sim$rasterToMatch,
       destinationPath = inputPath(sim)
     ) |> Cache()

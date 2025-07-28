@@ -18,8 +18,8 @@ prepInputsDisturbances <- function(source, types, years, to, destinationPath) {
 
 prepInputsCanLaD <- function(types, years, to, destinationPath){
   
-  availableTypes <- "fire"
-  if(!(availableTypes %in% types)){
+  availableTypes <- c("wildfire", "harvesting")
+  if(all(!(availableTypes %in% types))){
     stop(
       paste(
         types, " is not currently available with CanLaD.",
@@ -34,7 +34,7 @@ prepInputsCanLaD <- function(types, years, to, destinationPath){
     message("Reading CanLaD disturbances for year: ", year)
     CanLadDisturbances <- prepInputs(
       url = paste0(
-      "https://ftp.maps.canada.ca/pub/nrcan_rncan/Forests_Foret/canlad_including_insect_defoliation/v1/Disturbances_Time_Series/canlad_annual_", year, "_v1.tif"
+        "https://ftp.maps.canada.ca/pub/nrcan_rncan/Forests_Foret/canlad_including_insect_defoliation/v1/Disturbances_Time_Series/canlad_annual_", year, "_v1.tif"
       ),
       to = to,
       destinationPath = destinationPath
@@ -50,12 +50,16 @@ prepInputsCanLaD <- function(types, years, to, destinationPath){
     # 6= Low severity defoliation
     # 7= Medium severity defoliation	
     # 8= High severity defoliation
-    if ("fire" %in% types){
+    if ("wildfire" %in% types){
       fires <- CanLadDisturbances
       fires[fires != 1] <- NA
-      disturbanceRasters[["fires"]][[as.character(year)]] <- fires
+      disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
     }
-    
+    if ("harvesting" %in% types){
+      harvests <- CanLadDisturbances
+      harvests[harvests != 2] <- NA
+      disturbanceRasters[["harvesting"]][[as.character(year)]] <- harvests
+    }
   }
   
   return(disturbanceRasters)
