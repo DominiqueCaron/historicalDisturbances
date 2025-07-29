@@ -12,6 +12,11 @@ prepInputsDisturbances <- function(source, types, years, to, destinationPath) {
                                                       years = disturbanceParams$years,
                                                       to = to, 
                                                       destinationPath = destinationPath)
+  } else if (source == "NBAC") {
+    disturbanceRasters <- prepInputsDisturbancesNBAC(types = disturbanceParams$types,
+                                                      years = disturbanceParams$years,
+                                                      to = to, 
+                                                      destinationPath = destinationPath)
   }
   
   return(disturbanceRasters)
@@ -94,15 +99,38 @@ prepInputsDisturbancesNTEMS <- function(types, years, to, destinationPath){
   return(disturbanceRasters)
 }
 
+prepInputsDisturbancesNBAC <- function(types, years, to, destinationPath){
+  
+  disturbanceRasters <- list()
+  NBACfires <- prepInputs(
+    url = "https://cwfis.cfs.nrcan.gc.ca/downloads/nbac/NBAC_1972to2024_20250506_shp.zip",
+    to = to,
+    destinationPath = destinationPath
+  ) 
+  
+  for (year in years){
+    fires <- vect(NBACfires[NBACfires$YEAR == year,])
+    fires <- rasterize(fires, to, field = 1, background = 0)
+    fires <- mask(fires, to)
+    disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
+  }
+  
+  return(disturbanceRasters)
+}
 
-checkParameters <- function(source, types, years){
-  availableData <- fread("https://raw.githubusercontent.com/DominiqueCaron/historicalDisturbances/refs/heads/main/data/availableData.csv", showProgress = FALSE)
+
+checkParameters <- function(source, types, years) {
+  availableData <- fread(
+    "https://raw.githubusercontent.com/DominiqueCaron/historicalDisturbances/refs/heads/main/data/availableData.csv",
+    showProgress = FALSE
+  )
   
   # 1. Check that the data source is available
-  if(!(source %in% availableData$disturbanceSource)) {
+  if (!(source %in% availableData$disturbanceSource)) {
     stop(
       paste(
-        source, "is not currently available in historicalDisturbances.",
+        source,
+        "is not currently available in historicalDisturbances.",
         "Refer to data/availableData.csv to see which data are available."
       )
     )
@@ -110,12 +138,14 @@ checkParameters <- function(source, types, years){
   availableData <- availableData[disturbanceSource == source]
   
   # 2. Check that disturbance types are available
-  if(!(all(types %in% availableData$disturbanceTypes))) {
+  if (!(all(types %in% availableData$disturbanceTypes))) {
     notAvailableTypes <- setdiff(types, availableData$disturbanceTypes)
-    if (length(notAvailableTypes) == 1){
+    
+    if (length(notAvailableTypes) == 1) {
       stop(
         paste(
-          notAvailableTypes, "is currently not available in historicalDisturbances.",
+          notAvailableTypes,
+          "is currently not available in historicalDisturbances.",
           "Refer to data/availableData.csv to see which data are available."
         )
       )
@@ -131,20 +161,18 @@ checkParameters <- function(source, types, years){
   } else {
     
     for (type in types) {
-      
       # 3. Check that disturbance years are available
       availableYears <- as.numeric(strsplit(availableData[disturbanceTypes == type, disturbanceYears], ":")[[1]]) |> (\(x) x[1]:x[2])()
-      if(!all(years %in% availableYears)) {
+      if (!all(years %in% availableYears)) {
         stop(
           paste0(
-            "Some years are currently not available for ", type, " in historicalDisturbances.",
+            "Some years are currently not available for ",
+            type,
+            " in historicalDisturbances.",
             "Refer to data/availableData.csv to see which data are available."
           )
         )
       }
-      
     }
-    
   }
-  
 }
