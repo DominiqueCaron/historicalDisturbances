@@ -3,18 +3,18 @@ prepInputsDisturbances <- function(source, types, years, to, destinationPath) {
   checkParameters(source, types, years)
   
   if (source == "CanLaD") {
-    disturbanceRasters <- prepInputsDisturbancesCanLaD(types = disturbanceParams$types,
-                                                       years = disturbanceParams$years,
+    disturbanceRasters <- prepInputsDisturbancesCanLaD(types = types,
+                                                       years = years,
                                                        to = to, 
                                                        destinationPath = destinationPath)
   } else if (source == "NTEMS") {
-    disturbanceRasters <- prepInputsDisturbancesNTEMS(types = disturbanceParams$types,
-                                                      years = disturbanceParams$years,
+    disturbanceRasters <- prepInputsDisturbancesNTEMS(types = types,
+                                                      years = years,
                                                       to = to, 
                                                       destinationPath = destinationPath)
   } else if (source == "NBAC") {
-    disturbanceRasters <- prepInputsDisturbancesNBAC(types = disturbanceParams$types,
-                                                      years = disturbanceParams$years,
+    disturbanceRasters <- prepInputsDisturbancesNBAC(types = types,
+                                                      years = years,
                                                       to = to, 
                                                       destinationPath = destinationPath)
   }
