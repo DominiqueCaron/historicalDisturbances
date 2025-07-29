@@ -1,18 +1,23 @@
 prepInputsDisturbances <- function(source, types, years, to, destinationPath) {
   # Make sure that the combination of source, years and types are available:
   checkParameters(source, types, years)
-
-    if (source == "CanLaD") {
-    disturbanceRasters <- prepInputsCanLaD(types = disturbanceParams$types,
-                                           years = disturbanceParams$years,
-                                           to = to, 
-                                           destinationPath = destinationPath)
-    }
+  
+  if (source == "CanLaD") {
+    disturbanceRasters <- prepInputsDisturbancesCanLaD(types = disturbanceParams$types,
+                                                       years = disturbanceParams$years,
+                                                       to = to, 
+                                                       destinationPath = destinationPath)
+  } else if (source == "NTEMS") {
+    disturbanceRasters <- prepInputsDisturbancesNTEMS(types = disturbanceParams$types,
+                                                      years = disturbanceParams$years,
+                                                      to = to, 
+                                                      destinationPath = destinationPath)
+  }
   
   return(disturbanceRasters)
 }
 
-prepInputsCanLaD <- function(types, years, to, destinationPath){
+prepInputsDisturbancesCanLaD <- function(types, years, to, destinationPath){
   
   disturbanceRasters <- list()
   
@@ -38,12 +43,13 @@ prepInputsCanLaD <- function(types, years, to, destinationPath){
     # 8= High severity defoliation
     if ("wildfire" %in% types){
       fires <- CanLadDisturbances
-      fires[fires != 1] <- NA
+      fires[fires != 1] <- 0
       disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
     }
     if ("harvesting" %in% types){
       harvests <- CanLadDisturbances
-      harvests[harvests != 2] <- NA
+      harvests[harvests != 2] <- 0
+      harvests[harvests == 2] <- 1
       disturbanceRasters[["harvesting"]][[as.character(year)]] <- harvests
     }
   }
@@ -51,7 +57,45 @@ prepInputsCanLaD <- function(types, years, to, destinationPath){
   return(disturbanceRasters)
 }
 
-checkParameters <- function( source, types, years){
+prepInputsDisturbancesNTEMS <- function(types, years, to, destinationPath){
+  
+  disturbanceRasters <- list()
+
+  if ("wildfire" %in% types){
+    NTEMSFires <- prepInputs(
+      url = "https://opendata.nfis.org/downloads/forest_change/CA_Forest_Fire_1985-2020.zip",
+      to = to,
+      destinationPath = destinationPath
+    ) 
+    
+    for (year in years){
+      fires <- NTEMSFires
+      fires[fires != year] <- 0
+      fires[fires == year] <- 1
+      disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
+    }
+  }
+  
+  if ("harvesting" %in% types){
+    NTEMSHarvests <- prepInputs(
+      url = "https://opendata.nfis.org/downloads/forest_change/CA_Forest_Harvest_1985-2020.zip",
+      to = to,
+      destinationPath = destinationPath
+    ) 
+    
+    for (year in years){
+      harvests <- NTEMSHarvests
+      harvests[harvests != year] <- 0
+      harvests[harvests == year] <- 1
+      disturbanceRasters[["harvesting"]][[as.character(year)]] <- harvests
+    }
+  }
+  
+  return(disturbanceRasters)
+}
+
+
+checkParameters <- function(source, types, years){
   availableData <- fread("https://raw.githubusercontent.com/DominiqueCaron/historicalDisturbances/refs/heads/main/data/availableData.csv", showProgress = FALSE)
   
   # 1. Check that the data source is available
