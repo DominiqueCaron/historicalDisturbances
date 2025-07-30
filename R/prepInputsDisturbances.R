@@ -49,13 +49,13 @@ prepInputsDisturbancesCanLaD <- function(types, years, to, destinationPath){
     if ("wildfire" %in% types){
       fires <- CanLadDisturbances
       fires[fires != 1] <- 0
-      disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
+      disturbanceRasters[["1"]][[as.character(year)]] <- fires
     }
     if ("harvesting" %in% types){
       harvests <- CanLadDisturbances
       harvests[harvests != 2] <- 0
       harvests[harvests == 2] <- 1
-      disturbanceRasters[["harvesting"]][[as.character(year)]] <- harvests
+      disturbanceRasters[["2"]][[as.character(year)]] <- harvests
     }
   }
   
@@ -77,7 +77,7 @@ prepInputsDisturbancesNTEMS <- function(types, years, to, destinationPath){
       fires <- NTEMSFires
       fires[fires != year] <- 0
       fires[fires == year] <- 1
-      disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
+      disturbanceRasters[["1"]][[as.character(year)]] <- fires
     }
   }
   
@@ -92,7 +92,7 @@ prepInputsDisturbancesNTEMS <- function(types, years, to, destinationPath){
       harvests <- NTEMSHarvests
       harvests[harvests != year] <- 0
       harvests[harvests == year] <- 1
-      disturbanceRasters[["harvesting"]][[as.character(year)]] <- harvests
+      disturbanceRasters[["2"]][[as.character(year)]] <- harvests
     }
   }
   
@@ -112,7 +112,7 @@ prepInputsDisturbancesNBAC <- function(types, years, to, destinationPath){
     fires <- vect(NBACfires[NBACfires$YEAR == year,])
     fires <- rasterize(fires, to, field = 1, background = 0)
     fires <- mask(fires, to)
-    disturbanceRasters[["wildfire"]][[as.character(year)]] <- fires
+    disturbanceRasters[["1"]][[as.character(year)]] <- fires
   }
   
   return(disturbanceRasters)

@@ -93,11 +93,11 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
     readDisturbances = {
       
       if ("wildfire" %in% P(sim)$disturbanceTypes){
-        sim$rstCurrentBurn <- sim$disturbanceRasters[["fires"]][[as.character(time(sim))]]
+        sim$rstCurrentBurn <- sim$disturbanceRasters[["1"]][[as.character(time(sim))]]
       }
       
       if ("harvesting" %in% P(sim)$disturbanceTypes){
-        sim$rstCurrentHarvest <- sim$disturbanceRasters[["harvesting"]][[as.character(time(sim))]]
+        sim$rstCurrentHarvest <- sim$disturbanceRasters[["2"]][[as.character(time(sim))]]
       }
       
       if(any(!is.na(P(sim)$disturbanceYears))) {
