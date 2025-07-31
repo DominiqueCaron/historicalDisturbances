@@ -52,7 +52,7 @@ defineModule(sim, list(
         eventID             = "Event type ID",
         name                = "Disturbance name (e.g. 'Wildfire').",
         sourceValue         = "Value in `disturbanceRasters` to include as events",
-        sourceDelay         = "Optional. Delay (in years) of when the `disturbanceRasters` will take effect",
+        sourceDelay         = "Optional. Delay (in years) of when the `disturbanceRasters` will take effect"
       )
     ),
     expectsInput(
