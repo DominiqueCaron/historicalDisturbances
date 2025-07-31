@@ -81,7 +81,8 @@ defineModule(sim, list(
         name                = "Disturbance name (e.g. 'Wildfire'). Required only if 'disturbance_type_id' absent.",
         sourceValue         = "Value in `disturbanceRasters` to include as events",
         sourceDelay         = "Delay (in years) of when the `disturbanceRasters` will take effect",
-        sourceObjectName    = "Name of the object in the `simList` to retrieve the `disturbanceRasters` from annually."
+        sourceObjectName    = "Name of the object in the `simList` to retrieve the `disturbanceRasters` from annually.",
+        disturbance_type_id = "CBM-CFS3 disturbance type ID."
       )
     ),
     createsOutput(objectName = "rstCurrentBurn", 
@@ -189,7 +190,8 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
                                      name = "Wildfire",
                                      sourceValue = 1L,
                                      sourceDelay = 0L,
-                                     sourceObjectName = "rstCurrentBurn"
+                                     sourceObjectName = "rstCurrentBurn",
+                                     disturbance_type_id = 1L
                                    )
       )
     }
@@ -200,7 +202,8 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
                                      name = "Harvesting",
                                      sourceValue = 1L,
                                      sourceDelay = 0L,
-                                     sourceObjectName = "rstCurrentHarvest"
+                                     sourceObjectName = "rstCurrentHarvest",
+                                     disturbance_type_id = 2L
                                    )
       )
     }
