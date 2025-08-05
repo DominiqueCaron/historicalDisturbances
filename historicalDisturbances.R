@@ -127,13 +127,6 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
             sim$rstCurrentHarvest <- NULL
           }
         }
-      
-      if(any(!is.na(P(sim)$disturbanceYears))) {
-        if(any(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])){
-          nextDistYear <- min(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])
-          sim <- scheduleEvent(sim, nextDistYear, "historicalDisturbances", "readDisturbances")
-        }
-      }
         sim <- scheduleEvent(sim, time(sim) + 1, "historicalDisturbances", "readDisturbances")
       },
     warning(noEventWarning(sim))
