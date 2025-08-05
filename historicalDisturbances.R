@@ -99,14 +99,7 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
     eventType,
     init = {
 
-      # schedule future event(s)
-      if(any(!is.na(P(sim)$disturbanceYears))) {
-        firstDistYear <- min(P(sim)$disturbanceYears)
-      } else {
-        firstDistYear <- start(sim)
-      }
-      
-      sim <- scheduleEvent(sim, firstDistYear, "historicalDisturbances", "readDisturbances")
+      sim <- scheduleEvent(sim, start(sim), "historicalDisturbances", "readDisturbances")
       
       sim <- scheduleEvent(sim, P(sim)$.plotInitialTime, "historicalDisturbances", "plot")
     },
@@ -117,25 +110,32 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
     },
     readDisturbances = {
       
-      if ("wildfire" %in% P(sim)$disturbanceTypes){
-        sim$rstCurrentBurn <- sim$disturbanceRasters[["1"]][[as.character(time(sim))]]
-      }
-      
-      if ("harvesting" %in% P(sim)$disturbanceTypes){
-        sim$rstCurrentHarvest <- sim$disturbanceRasters[["2"]][[as.character(time(sim))]]
-      }
+      if(all(is.na(P(sim)$disturbanceYears)) || time(sim) %in% P(sim)$disturbanceYears){
+          if ("wildfire" %in% P(sim)$disturbanceTypes){
+            sim$rstCurrentBurn <- sim$disturbanceRasters[["1"]][[as.character(time(sim))]]
+          }
+          
+          if ("harvesting" %in% P(sim)$disturbanceTypes){
+            sim$rstCurrentHarvest <- sim$disturbanceRasters[["2"]][[as.character(time(sim))]]
+          }
+        } else {
+          if ("wildfire" %in% P(sim)$disturbanceTypes){
+            sim$rstCurrentBurn <- NULL
+          }
+          
+          if ("harvesting" %in% P(sim)$disturbanceTypes){
+            sim$rstCurrentHarvest <- NULL
+          }
+        }
       
       if(any(!is.na(P(sim)$disturbanceYears))) {
         if(any(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])){
           nextDistYear <- min(P(sim)$disturbanceYears[P(sim)$disturbanceYears > time(sim)])
           sim <- scheduleEvent(sim, nextDistYear, "historicalDisturbances", "readDisturbances")
         }
-      } else {
-        nextDistYear <- time(sim) + 1
-        sim <- scheduleEvent(sim, nextDistYear, "historicalDisturbances", "readDisturbances")
       }
-      
-    },
+        sim <- scheduleEvent(sim, time(sim) + 1, "historicalDisturbances", "readDisturbances")
+      },
     warning(noEventWarning(sim))
   )
   return(invisible(sim))

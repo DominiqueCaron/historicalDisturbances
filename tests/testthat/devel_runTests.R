@@ -18,4 +18,5 @@ testthat::test_dir(file.path("tests", "testthat"), reporter = testthat::Location
 testthat::test_dir(file.path("tests", "testthat"), reporter = testthat::SummaryReporter)
 
 ## RUN INDIVIDUAL TESTS ----
-testthat::test_file(file.path("tests", "testthat", "test-1-matchCurveToCohort.R"))
+testthat::test_file(file.path("tests", "testthat", "test-1-prepInputsDisturbances.R"))
+testthat::test_file(file.path("tests", "testthat", "test-2-historicalDisturbances.R"))
