@@ -2973,7 +2973,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">historicalDisturbances Manual</h1>
 <h3 class="subtitle">v.0.0.0.9000</h3>
-<h4 class="date">Last updated: 2025-07-28</h4>
+<h4 class="date">Last updated: 2025-08-05</h4>
 
 </div>
 
@@ -3030,7 +3030,7 @@ wildfire
 1985:2024
 </td>
 <td style="text-align:left;">
-<a href="https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc" class="uri">https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc</a>
+<a href="https://open.canada.ca/data/en/dataset/902801fd-4d9d-4df4-9e95-319e429545cc" class="uri">https://open.canada.ca/data/en/dataset/902801fd-4d9d-4df4-9e95-319e429545cc</a>
 </td>
 <td style="text-align:left;">
 Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St-Amant, Canada Landsat Disturbance with pest (CanLaD): a Canada-wide Landsat-based 30-m resolution product of fire, harvest and pest outbreak detection and attribution since 1987.
@@ -3047,10 +3047,61 @@ harvesting
 1985:2024
 </td>
 <td style="text-align:left;">
-<a href="https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc" class="uri">https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc</a>
+<a href="https://open.canada.ca/data/en/dataset/902801fd-4d9d-4df4-9e95-319e429545cc" class="uri">https://open.canada.ca/data/en/dataset/902801fd-4d9d-4df4-9e95-319e429545cc</a>
 </td>
 <td style="text-align:left;">
 Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St-Amant, Canada Landsat Disturbance with pest (CanLaD): a Canada-wide Landsat-based 30-m resolution product of fire, harvest and pest outbreak detection and attribution since 1987.
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NTEMS
+</td>
+<td style="text-align:left;">
+wildfire
+</td>
+<td style="text-align:left;">
+1985:2020
+</td>
+<td style="text-align:left;">
+<a href="https://opendata.nfis.org/mapserver/nfis-change_eng.html" class="uri">https://opendata.nfis.org/mapserver/nfis-change_eng.html</a>
+</td>
+<td style="text-align:left;">
+Hermosilla, T., M.A. Wulder, J.C. White, N.C. Coops, G.W. Hobart, L.B. Campbell, 2016. Mass data processing of time series Landsat imagery: pixels to data products for forest monitoring. International Journal of Digital Earth 9(11), 1035-1054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NTEMS
+</td>
+<td style="text-align:left;">
+harvesting
+</td>
+<td style="text-align:left;">
+1985:2020
+</td>
+<td style="text-align:left;">
+<a href="https://opendata.nfis.org/mapserver/nfis-change_eng.html" class="uri">https://opendata.nfis.org/mapserver/nfis-change_eng.html</a>
+</td>
+<td style="text-align:left;">
+Hermosilla, T., M.A. Wulder, J.C. White, N.C. Coops, G.W. Hobart, L.B. Campbell, 2016. Mass data processing of time series Landsat imagery: pixels to data products for forest monitoring. International Journal of Digital Earth 9(11), 1035-1054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NBAC
+</td>
+<td style="text-align:left;">
+wildfire
+</td>
+<td style="text-align:left;">
+1972:2024
+</td>
+<td style="text-align:left;">
+<a href="https://cwfis.cfs.nrcan.gc.ca/datamart" class="uri">https://cwfis.cfs.nrcan.gc.ca/datamart</a>
+</td>
+<td style="text-align:left;">
+Canadian Forest Service. National Burned Area Composite (NBAC). Natural Resources Canada, Canadian Forest Service, Northern Forestry Centre, Edmonton, Alberta
 </td>
 </tr>
 </tbody>
@@ -3058,10 +3109,10 @@ Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St
 </div>
 <div id="module-inputs-and-parameters" class="section level3">
 <h3>Module inputs and parameters</h3>
-<p>Table <a href="#tab:moduleInputs-historicalDisturbances">3</a> shows the full list of module inputs.</p>
+<p>Table <a href="#tab:moduleInputs-historicalDisturbances"><strong>??</strong></a> shows the full list of module inputs.</p>
 <table class="table" style="color: black; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:moduleInputs-historicalDisturbances">Table 3: </span><span id="tab:moduleInputs-historicalDisturbances">Table 4: </span>List of <em>historicalDisturbances</em> input objects and their description.
+<span id="tab:moduleInputs-historicalDisturbancess">Table 3: </span><span id="tab:moduleInputs-historicalDisturbancess">Table 4: </span>List of <em>historicalDisturbances</em> input objects and their description.
 </caption>
 <thead>
 <tr>
@@ -3077,9 +3128,29 @@ desc
 <th style="text-align:left;">
 sourceURL
 </th>
+<th style="text-align:left;">
+columns
+</th>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+disturbanceMeta
+</td>
+<td style="text-align:left;">
+data.table
+</td>
+<td style="text-align:left;">
+Table defining the disturbance event types in disturbanceRasters. Need to be provided with disturbanceRasters.
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+Event ty….
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 disturbanceRasters
@@ -3088,10 +3159,12 @@ disturbanceRasters
 list
 </td>
 <td style="text-align:left;">
-Set of spatial data sources containing locations of disturbance events for each year. List items must be named by disturbance event types. Within each event’s list, items must be named by the 4 digit year the disturbances occured in. For example, fires for 2025 can be accessed with <code>disturbanceRasters[[&quot;fires&quot;]][[&quot;2025&quot;]]</code>. Each disturbance item is a terra SpatRaster layer. All non-NA areas will be considered events.
+Set of spatial data sources containing locations of disturbance events for each year. List items must be named by disturbance event type ID (e.g., “1”). Within each event’s list, items must be named by the 4 digit year the disturbances occured in. For example, fires for 2025 can be accessed with <code>disturbanceRasters[[&quot;1&quot;]][[&quot;2025&quot;]]</code>. Each disturbance item is a terra SpatRaster layer. Needs the input disturbanceMeta.
 </td>
 <td style="text-align:left;">
 NA
+</td>
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
@@ -3106,6 +3179,8 @@ Raster template defining the study area. NA cells will be excluded from analysis
 </td>
 <td style="text-align:left;">
 NA
+</td>
+<td style="text-align:left;">
 </td>
 </tr>
 </tbody>
@@ -3299,9 +3374,26 @@ objectClass
 <th style="text-align:left;">
 desc
 </th>
+<th style="text-align:left;">
+columns
+</th>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+disturbanceMeta
+</td>
+<td style="text-align:left;">
+data.table
+</td>
+<td style="text-align:left;">
+Table defining the disturbance event types.
+</td>
+<td style="text-align:left;">
+Event ty….
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 rstCurrentBurn
@@ -3311,6 +3403,8 @@ spatRaster
 </td>
 <td style="text-align:left;">
 A binary raster with 1 values representing burned pixels.
+</td>
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
@@ -3322,6 +3416,8 @@ spatRaster
 </td>
 <td style="text-align:left;">
 A binary raster with 1 values representing harvested pixels.
+</td>
+<td style="text-align:left;">
 </td>
 </tr>
 </tbody>

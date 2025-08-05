@@ -1,7 +1,7 @@
 ---
 title: "historicalDisturbances Manual"
 subtitle: "v.0.0.0.9000"
-date: "Last updated: 2025-07-28"
+date: "Last updated: 2025-08-05"
 output:
   bookdown::html_document2:
     toc: true
@@ -57,15 +57,36 @@ Table \@ref(tab:data-historicalDisturbances) shows the full list of module input
    <td style="text-align:left;"> CanLaD </td>
    <td style="text-align:left;"> wildfire </td>
    <td style="text-align:left;"> 1985:2024 </td>
-   <td style="text-align:left;"> https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc </td>
+   <td style="text-align:left;"> https://open.canada.ca/data/en/dataset/902801fd-4d9d-4df4-9e95-319e429545cc </td>
    <td style="text-align:left;"> Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St-Amant, Canada Landsat Disturbance with pest (CanLaD): a Canada-wide Landsat-based 30-m resolution product of fire, harvest and pest outbreak detection and attribution since 1987. </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CanLaD </td>
    <td style="text-align:left;"> harvesting </td>
    <td style="text-align:left;"> 1985:2024 </td>
-   <td style="text-align:left;"> https://doi.org/10.23687/902801fd-4d9d-4df4-9e95-319e429545cc </td>
+   <td style="text-align:left;"> https://open.canada.ca/data/en/dataset/902801fd-4d9d-4df4-9e95-319e429545cc </td>
    <td style="text-align:left;"> Perbet, P., Guindon, L., Correia D.L.P., P. Villemaire, O., Reisi Gahrouei R. St-Amant, Canada Landsat Disturbance with pest (CanLaD): a Canada-wide Landsat-based 30-m resolution product of fire, harvest and pest outbreak detection and attribution since 1987. </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NTEMS </td>
+   <td style="text-align:left;"> wildfire </td>
+   <td style="text-align:left;"> 1985:2020 </td>
+   <td style="text-align:left;"> https://opendata.nfis.org/mapserver/nfis-change_eng.html </td>
+   <td style="text-align:left;"> Hermosilla, T., M.A. Wulder, J.C. White, N.C. Coops, G.W. Hobart, L.B. Campbell, 2016. Mass data processing of time series Landsat imagery: pixels to data products for forest monitoring. International Journal of Digital Earth 9(11), 1035-1054 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NTEMS </td>
+   <td style="text-align:left;"> harvesting </td>
+   <td style="text-align:left;"> 1985:2020 </td>
+   <td style="text-align:left;"> https://opendata.nfis.org/mapserver/nfis-change_eng.html </td>
+   <td style="text-align:left;"> Hermosilla, T., M.A. Wulder, J.C. White, N.C. Coops, G.W. Hobart, L.B. Campbell, 2016. Mass data processing of time series Landsat imagery: pixels to data products for forest monitoring. International Journal of Digital Earth 9(11), 1035-1054 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NBAC </td>
+   <td style="text-align:left;"> wildfire </td>
+   <td style="text-align:left;"> 1972:2024 </td>
+   <td style="text-align:left;"> https://cwfis.cfs.nrcan.gc.ca/datamart </td>
+   <td style="text-align:left;"> Canadian Forest Service. National Burned Area Composite (NBAC). Natural Resources Canada, Canadian Forest Service, Northern Forestry Centre, Edmonton, Alberta </td>
   </tr>
 </tbody>
 </table>
@@ -75,27 +96,37 @@ Table \@ref(tab:data-historicalDisturbances) shows the full list of module input
 Table \@ref(tab:moduleInputs-historicalDisturbances) shows the full list of module inputs.
 
 <table class="table" style="color: black; margin-left: auto; margin-right: auto;">
-<caption>(\#tab:moduleInputs-historicalDisturbances)(\#tab:moduleInputs-historicalDisturbances)List of (ref:historicalDisturbances) input objects and their description.</caption>
+<caption>(\#tab:moduleInputs-historicalDisturbancess)(\#tab:moduleInputs-historicalDisturbancess)List of (ref:historicalDisturbances) input objects and their description.</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> objectName </th>
    <th style="text-align:left;"> objectClass </th>
    <th style="text-align:left;"> desc </th>
    <th style="text-align:left;"> sourceURL </th>
+   <th style="text-align:left;"> columns </th>
   </tr>
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:left;"> disturbanceMeta </td>
+   <td style="text-align:left;"> data.table </td>
+   <td style="text-align:left;"> Table defining the disturbance event types in disturbanceRasters. Need to be provided with disturbanceRasters. </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> Event ty.... </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> disturbanceRasters </td>
    <td style="text-align:left;"> list </td>
-   <td style="text-align:left;"> Set of spatial data sources containing locations of disturbance events for each year. List items must be named by disturbance event types. Within each event's list, items must be named by the 4 digit year the disturbances occured in. For example, fires for 2025 can be accessed with `disturbanceRasters[["fires"]][["2025"]]`. Each disturbance item is a terra SpatRaster layer. All non-NA areas will be considered events. </td>
+   <td style="text-align:left;"> Set of spatial data sources containing locations of disturbance events for each year. List items must be named by disturbance event type ID (e.g., "1"). Within each event's list, items must be named by the 4 digit year the disturbances occured in. For example, fires for 2025 can be accessed with `disturbanceRasters[["1"]][["2025"]]`. Each disturbance item is a terra SpatRaster layer. Needs the input disturbanceMeta. </td>
    <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
    <td style="text-align:left;"> rasterToMatch </td>
    <td style="text-align:left;"> spatRaster </td>
    <td style="text-align:left;"> Raster template defining the study area. NA cells will be excluded from analysis. </td>
    <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>
@@ -187,18 +218,27 @@ Description of the module outputs (Table \@ref(tab:moduleOutputs-historicalDistu
    <th style="text-align:left;"> objectName </th>
    <th style="text-align:left;"> objectClass </th>
    <th style="text-align:left;"> desc </th>
+   <th style="text-align:left;"> columns </th>
   </tr>
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:left;"> disturbanceMeta </td>
+   <td style="text-align:left;"> data.table </td>
+   <td style="text-align:left;"> Table defining the disturbance event types. </td>
+   <td style="text-align:left;"> Event ty.... </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> rstCurrentBurn </td>
    <td style="text-align:left;"> spatRaster </td>
    <td style="text-align:left;"> A binary raster with 1 values representing burned pixels. </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
    <td style="text-align:left;"> rstCurrentHarvest </td>
    <td style="text-align:left;"> spatRaster </td>
    <td style="text-align:left;"> A binary raster with 1 values representing harvested pixels. </td>
+   <td style="text-align:left;">  </td>
   </tr>
 </tbody>
 </table>

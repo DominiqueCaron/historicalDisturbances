@@ -59,8 +59,8 @@ knitr::kable(data_available, caption = "Available disturbance products") |>
 
 Table \@ref(tab:moduleInputs-historicalDisturbances) shows the full list of module inputs.
 
-```{r moduleInputs-historicalDisturbances, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
-df_inputs <- SpaDES.core::moduleInputs("historicalDisturbances", "C:/Users/docaron/Documents/repos")
+```{r moduleInputs-historicalDisturbancess, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+df_inputs <- SpaDES.core::moduleInputs("historicalDisturbances", "..")
 knitr::kable(df_inputs,
              caption = "List of (ref:historicalDisturbances) input objects and their description.") |>
   kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
@@ -70,7 +70,7 @@ Summary of user-visible parameters (Table \@ref(tab:moduleParams-historicalDistu
 
 
 ```{r moduleParams-historicalDisturbances, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
-df_params <- SpaDES.core::moduleParams("historicalDisturbances", "C:/Users/docaron/Documents/repos")
+df_params <- SpaDES.core::moduleParams("historicalDisturbances", "..")
 knitr::kable(df_params, caption = "List of (ref:historicalDisturbances) parameters and their description.") |>
   kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
 ```
@@ -81,7 +81,7 @@ knitr::kable(df_params, caption = "List of (ref:historicalDisturbances) paramete
 Description of the module outputs (Table \@ref(tab:moduleOutputs-historicalDisturbances)).
 
 ```{r moduleOutputs-historicalDisturbances, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
-df_outputs <- SpaDES.core::moduleOutputs("historicalDisturbances", "C:/Users/docaron/Documents/repos")
+df_outputs <- SpaDES.core::moduleOutputs("historicalDisturbances", "..")
 knitr::kable(df_outputs, caption = "List of (ref:historicalDisturbances) outputs and their description.") |>
   kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
 ```
