@@ -32,6 +32,11 @@ defineModule(sim, list(
       desc = paste("The type of disturbance extracted.", 
                    "Refer to data/availableData.csv to see which data is available.")
     ),
+    defineParameter(
+      "disturbanceDelay", "numeric", 1L, 0L, NA_integer_, 
+      desc = paste("Delay (in years) of when the `disturbanceRasters` will take effect.",
+                   "The default is one year to match the effects in Biomass_regeneration.")
+    ),
     defineParameter(".plots", "character", "screen", NA, NA,
                     "Used by Plots function, which can be optionally used here"),
     defineParameter(".plotInitialTime", "numeric", start(sim), NA, NA,
@@ -182,7 +187,7 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
                                      eventID = 1L,
                                      name = "Wildfire",
                                      sourceValue = 1L,
-                                     sourceDelay = 0L,
+                                     sourceDelay = P(sim)$disturbanceDelay,
                                      sourceObjectName = "rstCurrentBurn",
                                      disturbance_type_id = 1L
                                    )
@@ -194,7 +199,7 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
                                      eventID = 2L,
                                      name = "Harvesting",
                                      sourceValue = 1L,
-                                     sourceDelay = 0L,
+                                     sourceDelay = P(sim)$disturbanceDelay,
                                      sourceObjectName = "rstCurrentHarvest",
                                      disturbance_type_id = 2L
                                    )
