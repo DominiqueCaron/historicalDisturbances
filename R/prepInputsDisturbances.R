@@ -14,9 +14,9 @@ prepInputsDisturbances <- function(source, types, years, to, destinationPath) {
                                                       destinationPath = destinationPath)
   } else if (source == "NBAC") {
     disturbanceRasters <- prepInputsDisturbancesNBAC(types = types,
-                                                      years = years,
-                                                      to = to, 
-                                                      destinationPath = destinationPath)
+                                                     years = years,
+                                                     to = to, 
+                                                     destinationPath = destinationPath)
   }
   
   return(disturbanceRasters)
@@ -33,7 +33,8 @@ prepInputsDisturbancesCanLaD <- function(types, years, to, destinationPath){
         "https://ftp.maps.canada.ca/pub/nrcan_rncan/Forests_Foret/canlad_including_insect_defoliation/v1/Disturbances_Time_Series/canlad_annual_", year, "_v1.tif"
       ),
       to = to,
-      destinationPath = destinationPath
+      destinationPath = destinationPath,
+      method = "near"
     )
     
     # CanLaD legend:
@@ -65,7 +66,7 @@ prepInputsDisturbancesCanLaD <- function(types, years, to, destinationPath){
 prepInputsDisturbancesNTEMS <- function(types, years, to, destinationPath){
   
   disturbanceRasters <- list()
-
+  
   if ("wildfire" %in% types){
     NTEMSFires <- prepInputs(
       url = "https://opendata.nfis.org/downloads/forest_change/CA_Forest_Fire_1985-2020.zip",

@@ -103,44 +103,44 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
   switch(
     eventType,
     init = {
-
+      
       sim <- scheduleEvent(sim, start(sim), "historicalDisturbances", "readDisturbances")
       
       sim <- scheduleEvent(sim, P(sim)$.plotInitialTime, "historicalDisturbances", "plot")
     },
     plot = {
       # ! ----- EDIT BELOW ----- ! #
-
+      
       # ! ----- STOP EDITING ----- ! #
     },
     readDisturbances = {
       
       if(all(is.na(P(sim)$disturbanceYears)) || time(sim) %in% P(sim)$disturbanceYears){
-          if ("wildfire" %in% P(sim)$disturbanceTypes){
-            sim$rstCurrentBurn <- sim$disturbanceRasters[["1"]][[as.character(time(sim))]]
-          }
-          
-          if ("harvesting" %in% P(sim)$disturbanceTypes){
-            sim$rstCurrentHarvest <- sim$disturbanceRasters[["2"]][[as.character(time(sim))]]
-          }
-        } else {
-          if ("wildfire" %in% P(sim)$disturbanceTypes){
-            sim$rstCurrentBurn <- NULL
-          }
-          
-          if ("harvesting" %in% P(sim)$disturbanceTypes){
-            sim$rstCurrentHarvest <- NULL
-          }
+        if ("wildfire" %in% P(sim)$disturbanceTypes){
+          sim$rstCurrentBurn <- sim$disturbanceRasters[["1"]][[as.character(time(sim))]]
         }
-        sim <- scheduleEvent(sim, time(sim) + 1, "historicalDisturbances", "readDisturbances")
-      },
+        
+        if ("harvesting" %in% P(sim)$disturbanceTypes){
+          sim$rstCurrentHarvest <- sim$disturbanceRasters[["2"]][[as.character(time(sim))]]
+        }
+      } else {
+        if ("wildfire" %in% P(sim)$disturbanceTypes){
+          sim$rstCurrentBurn <- NULL
+        }
+        
+        if ("harvesting" %in% P(sim)$disturbanceTypes){
+          sim$rstCurrentHarvest <- NULL
+        }
+      }
+      sim <- scheduleEvent(sim, time(sim) + 1, "historicalDisturbances", "readDisturbances")
+    },
     warning(noEventWarning(sim))
   )
   return(invisible(sim))
 }
 
 .inputObjects <- function(sim) {
-
+  
   #cacheTags <- c(currentModule(sim), "function:.inputObjects") ## uncomment this if Cache is being used
   dPath <- asPath(getOption("reproducible.destinationPath", dataPath(sim)), 1)
   message(currentModule(sim), ": using dataPath '", dPath, "'.")
@@ -153,10 +153,10 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
   if(suppliedElsewhere("disturbanceRasters", where = "user") & !suppliedElsewhere("disturbanceMeta", where = "user")){
     stop("The disturbanceMeta should only be provided if the user provides disturbanceRasters.")
   }
-
+  
   # Create disturbanceRasters and disturbanceMeta
   if (!suppliedElsewhere("disturbanceRasters")) {
-
+    
     # By default, the module gets the disturbance for all simulation years, unless
     # specified otherwise in the parameters
     if(all(is.na(P(sim)$disturbanceYears))) {
@@ -201,7 +201,7 @@ doEvent.historicalDisturbances = function(sim, eventTime, eventType) {
                                      sourceValue = 1L,
                                      sourceDelay = P(sim)$disturbanceDelay,
                                      sourceObjectName = "rstCurrentHarvest",
-                                     disturbance_type_id = 2L
+                                     disturbance_type_id = 204L
                                    )
       )
     }
